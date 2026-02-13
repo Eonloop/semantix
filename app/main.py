@@ -1,17 +1,14 @@
-from fastapi import FastAPI
+import fastapi
 import chromadb
 
-client = chromadb.Client()
-
-collection = client.create_collection(name="policies")
 
 app = FastAPI()
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
+@app.get("/search")
+async def search():    
+    return
 
-
-
-
+@app.post("/ingest")
+async def ingest():
+    return
