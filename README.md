@@ -8,5 +8,6 @@ Languages and Tools:
 - Docker
 - ChromaDB
 
-
+### Architecture Diagram
+![Semantix Architecture](./documentation/architecture.md)
 
