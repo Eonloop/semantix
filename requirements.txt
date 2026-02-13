@@ -1,2 +1,8 @@
 fastapi[standard]
 chromadb
+langchain-community
+langchain-huggingface
+langchain-text-splitters
+sentence-transformers
+pymupdf
+docx2txt
