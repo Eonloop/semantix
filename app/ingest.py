@@ -3,7 +3,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 import chromadb
 
-
 class Ingestor:
     def __init__(self, vector_db_path, model_name):
         self.embeddings = HuggingFaceEmbeddings(model_name=model_name)
@@ -33,5 +32,6 @@ class Ingestor:
 
 
 if __name__ == "__main__":
+    input_file = input("Enter the path to the file to ingest: ")
     ingestor = Ingestor(vector_db_path="./data/vector.db", model_name="sentence-transformers/all-MiniLM-L6-v2")
-    ingestor.ingest("/home/kingfisher/Dev/semantix/data/sample_policy.pdf")
+    ingestor.ingest(input_file)
