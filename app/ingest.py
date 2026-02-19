@@ -1,11 +1,13 @@
 from langchain_community.document_loaders import PyMuPDFLoader, Docx2txtLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from sentence_transformers import SentenceTransformer
 import chromadb
+import os
+
 
 class Ingestor:
     def __init__(self, vector_db_path, model_name):
-        self.embeddings = HuggingFaceEmbeddings(model_name=model_name)
+        self.model = SentenceTransformer(model_name)
         self.client = chromadb.PersistentClient(path=vector_db_path)
         self.collection = self.client.get_or_create_collection(name="policies")
 
@@ -23,15 +25,22 @@ class Ingestor:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         chunks = text_splitter.split_documents(documents)
 
-        self.collection.add(
-            documents=[chunk.page_content for chunk in chunks],
-            ids=[f"chunk_{i}" for i in range(len(chunks))],
+        texts = [chunk.page_content for chunk in chunks]
+        ids = [f"{file_path}:chunk_{i}" for i in range(len(chunks))]
+        metadatas = [{"source": file_path, "chunk_index": i} for i in range(len(chunks))]
+        embeddings = self.model.encode(texts).tolist()
+
+        self.collection.upsert(
+            ids=ids,
+            embeddings=embeddings,
+            metadatas=metadatas,
+            documents=texts,
         )
 
-        print(f"Ingested {len(chunks)} chunks")
+        print(f"Ingested {len(chunks)} chunks from {file_path}")
 
 
 if __name__ == "__main__":
-    input_file = input("Enter the path to the file to ingest: ")
+    input_file = os.path.expanduser(input("Enter the path to the file to ingest: ").strip())
     ingestor = Ingestor(vector_db_path="./data/vector.db", model_name="sentence-transformers/all-MiniLM-L6-v2")
     ingestor.ingest(input_file)
