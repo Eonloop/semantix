@@ -39,8 +39,35 @@ class Ingestor:
 
         print(f"Ingested {len(chunks)} chunks from {file_path}")
 
+    SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt", ".md"}
+
+    def ingest_directory(self, dir_path):
+        files = [
+            os.path.join(root, f)
+            for root, _, filenames in os.walk(dir_path)
+            for f in filenames
+            if os.path.splitext(f)[1].lower() in self.SUPPORTED_EXTENSIONS
+        ]
+
+        if not files:
+            print(f"No supported files found in {dir_path}")
+            return
+
+        print(f"Found {len(files)} supported file(s) in {dir_path}")
+        for file_path in files:
+            try:
+                self.ingest(file_path)
+            except Exception as e:
+                print(f"Failed to ingest {file_path}: {e}")
+
 
 if __name__ == "__main__":
-    input_file = os.path.expanduser(input("Enter the path to the file to ingest: ").strip())
+    input_path = os.path.expanduser(input("Enter the path to a file or folder to ingest: ").strip())
+    if not os.path.exists(input_path):
+        print(f"Path {input_path} does not exist")
+        exit(1)
     ingestor = Ingestor(vector_db_path="./data/vector.db", model_name="sentence-transformers/all-MiniLM-L6-v2")
-    ingestor.ingest(input_file)
+    if os.path.isdir(input_path):
+        ingestor.ingest_directory(input_path)
+    else:
+        ingestor.ingest(input_path)
