@@ -17,13 +17,14 @@ class Query:
     def query(self, query_text):
         query_embedding = self.model.encode(query_text).tolist()
         results = self.collection.query(
-            query_texts=[query_text],
+            query_embeddings=[query_embedding],
             n_results=2,
         )
-        return results["documents"][0]
+        return results["documents"][0], results["metadatas"][0]
 
 if __name__ == "__main__":
     query = Query(model_name="sentence-transformers/all-MiniLM-L6-v2")
     query_text = input("Enter your query: ")
-    results = query.query(query_text)
-    print(f"Results: {results}")
+    document, metadata = query.query(query_text)
+    print(f"Document: {document}")
+    print(f"Metadata: {metadata}")
