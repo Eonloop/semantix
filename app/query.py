@@ -1,17 +1,11 @@
 import chromadb
-import os
 from sentence_transformers import SentenceTransformer
 
 
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-client = chromadb.PersistentClient(path="./data/vector.db")
-collection = client.get_or_create_collection(name="policies")
-
-
 class Query:
-    def __init__(self, model_name):
+    def __init__(self, model_name, vector_db_path="./data/vector.db"):
         self.model = SentenceTransformer(model_name)
-        self.client = chromadb.PersistentClient(path="./data/vector.db")
+        self.client = chromadb.PersistentClient(path=vector_db_path)
         self.collection = self.client.get_or_create_collection(name="policies")
 
     def query(self, query_text):
