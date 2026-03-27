@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semantix</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/app.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <script src="/static/js/app.js"></script>
 </head>
 <body>
-    <h1>Semantix: A Semantic Search Tool for your Documentation</h1>
+    <div id="header">
+        <h1>Semantix</h1>
+        <p>A Semantic Search Engine for your Documentation</p>
+    </div>
+    
     <div id="upload-container">
         <input text="Upload a file" type="file" id="file-input" accept=".pdf, .docx, .txt, .md">
         <button id="upload-button">Upload</button>
+        <button id="delete-button">Clear File</button>
     </div>
     <div id="search-container">
-        <input text="Search for a term" type="text" id="search-input" placeholder="Search for a term">
+        <input text="Search for a term" type="text" id="search-input" placeholder="Enter a search query">
             <button id="search-button">Search</button>
         </div>
         <div id="results-container">
