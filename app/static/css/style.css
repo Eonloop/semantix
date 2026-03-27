@@ -1,6 +1,18 @@
-#upload-container {
+#header {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+#upload-container {
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
@@ -32,4 +44,22 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f0f0f0;
+}
+
+#upload-button {
+    margin: 10px;
+}
+
+#search-input {
+    margin: 10px;
+}
+
+.result-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: left;
+    text-wrap: wrap;
+    text-overflow: ellipsis;
+    width: 100%;
 }
