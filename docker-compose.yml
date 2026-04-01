@@ -1,0 +1,9 @@
+services:
+  semantix:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - vector-data:/app/data
+volumes:
+  vector-data:
