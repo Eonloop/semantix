@@ -1,7 +1,7 @@
 import pytest
 from conftest import MODEL_NAME
-from ingest import Ingestor
-from query import Query
+from app.ingest import Ingestor
+from app.query import Query
 
 
 @pytest.fixture

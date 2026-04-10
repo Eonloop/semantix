@@ -1,14 +1,24 @@
 import pytest
 import chromadb
-import os
-import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "app"))
-
-from ingest import Ingestor
-from query import Query
+from app.ingest import Ingestor
+from app.query import Query
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+
+POLICIES_COLLECTION_NAME = "policies"
+
+
+@pytest.fixture
+def vector_db_path(tmp_path) -> str:
+    return str(tmp_path)
+
+
+@pytest.fixture
+def policies_collection(vector_db_path):
+    client = chromadb.PersistentClient(path=vector_db_path)
+    return client.get_or_create_collection(name=POLICIES_COLLECTION_NAME)
+
 
 @pytest.fixture(scope="session")
 def chroma_client(tmp_path_factory):
@@ -26,8 +36,8 @@ def test_data():
 
 
 @pytest.fixture
-def ingestor(tmp_path):
-    return Ingestor(vector_db_path=str(tmp_path), model_name=MODEL_NAME)
+def ingestor(vector_db_path):
+    return Ingestor(vector_db_path=vector_db_path, model_name=MODEL_NAME)
 
 
 @pytest.fixture
