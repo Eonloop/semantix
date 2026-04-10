@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 import os
 
+__all__ = ["Ingestor"]
 
 class Ingestor:
     def __init__(self, vector_db_path, model_name):
