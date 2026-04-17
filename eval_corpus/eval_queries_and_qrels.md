@@ -34,6 +34,22 @@ Use this file to evaluate MRR and Recall@K.
 10. Query: "defending web services against ddos traffic floods"
    - Relevant docs: `doc-10-ddos-resilience.md`
 
+11. Query: "preventing forged state-changing requests with csrf tokens and samesite cookies"
+   - Relevant docs: `doc-11-csrf-protection.md`
+
+12. Query: "blocking ssrf attacks that exploit internal services and cloud metadata"
+   - Relevant docs: `doc-12-ssrf-prevention.md`
+
+13. Query: "enforcing multi-factor authentication and least privilege access control"
+   - Relevant docs: `doc-13-iam-mfa.md`
+
+14. Query: "centralized log aggregation and siem detection rule engineering"
+   - Relevant docs: `doc-14-logging-siem.md`
+
+15. Query: "automating tls certificate renewal and mutual tls for service authentication"
+   - Relevant docs: `doc-15-tls-certificates.md`
+
+
 ## Notes
 
 - Start with `K = 1, 3, 5`.

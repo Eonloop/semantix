@@ -9,13 +9,12 @@ class Query:
         self.client = chromadb.PersistentClient(path=vector_db_path)
         self.collection = self.client.get_or_create_collection(name="policies")
 
-    def query(self, query_text, k: int | None = 2):
+    def query(self, query_text, n_results=2):
         query_embedding = self.model.encode(query_text).tolist()
         count = self.collection.count()
         if count == 0:
             return [], []
-        n_results = 2 if k is None else int(k)
-        n_results = max(1, min(n_results, count))
+        n_results = max(1, min(int(n_results), count))
         results = self.collection.query(
             query_embeddings=[query_embedding],
             n_results=n_results,
